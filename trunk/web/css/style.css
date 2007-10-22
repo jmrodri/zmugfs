@@ -40,7 +40,7 @@ ul#nav {
 }
 
 ul#nav li a {
-  color: #59cbe1;
+  color: #08db00;
   text-decoration: none;
 }
 
@@ -74,8 +74,10 @@ div#feed ul {
 
 div#main {
   background-color: #212121;
-  border-top: 1px solid #59cbe1;
-  border-bottom: 1px solid #59cbe1;
+  /* border-top: 1px solid #08db00;*/
+  border-top: 1px solid #08db00;
+  /* border-bottom: 1px solid #08db00;*/
+  border-bottom: 1px solid #08db00;
   overflow: auto;
   padding: 20px 0px;
 }
@@ -98,7 +100,7 @@ div#content h2 {
 }
 
 div#content h3 {
-  color: #59cbe1;
+  color: #08db00;
 }
 
 
@@ -108,7 +110,7 @@ div#content p {
 }
 
 a:link {
-  color: #59cbe1;
+  color: #08db00;
 }
 
 a:hover {
@@ -116,7 +118,7 @@ a:hover {
 }
 
 a:visited {
-  color: #99d9e8;
+  color: #30a62a;
 }
 
 
