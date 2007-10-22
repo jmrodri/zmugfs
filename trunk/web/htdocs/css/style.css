@@ -105,8 +105,11 @@ div#content h3 {
 
 
 div#content p {
-  font-size: small;
   color: #ccc;
+}
+
+div#content a, p {
+  font-size: large;
 }
 
 a:link {
