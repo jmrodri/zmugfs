@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import fuse
 from fuse import Fuse
 from datetime import *
