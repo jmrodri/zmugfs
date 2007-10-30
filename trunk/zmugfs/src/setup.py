@@ -11,6 +11,8 @@ setup(name="zmugfs",
       author="Jesus M. Rodriguez",
       author_email="jmrodri@nc.rr.com",
       url="http://zmugtools.sourceforge.net",
-      py_modules=["zmugfs", "../../sm-photo-tool/playpen/zmugjson"],
+      py_modules=["zmugfs"],
       license="GPL",
+      data_files = [("/usr/share/doc/zmugfs-%s" % VERSION, ["LICENSE.TXT"])
+      ]
      )
