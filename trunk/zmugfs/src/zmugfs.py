@@ -1,11 +1,9 @@
 #!/usr/bin/python
 import fuse
 from fuse import Fuse
-from datetime import *
 import os, stat, errno, time
 import zmugjson
 from config import Config
-import logging
 import logging.config
 import httplib
 
