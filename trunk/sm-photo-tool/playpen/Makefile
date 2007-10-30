@@ -76,4 +76,4 @@ rpms: build sdist
 	--define '_rpmfilename %%{NAME}-%%{VERSION}-%%{RELEASE}.%%{ARCH}.rpm' \
 	--define "_specdir %{_topdir}" \
 	--define "_sourcedir  %{_topdir}" \
-	-ba zmugfs.spec
+	-ba zmugjson.spec

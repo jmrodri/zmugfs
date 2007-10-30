@@ -2,6 +2,8 @@
 
 from distutils.core import setup
 
+VERSION = open("version", "r+").read().split()[0]
+
 setup(name="zmugjson",
       version="0.1",
       description="zmugjson a smugmug.com JSON api",
@@ -11,6 +13,7 @@ setup(name="zmugjson",
       url="http://zmugtools.sourceforge.net",
       py_modules=["zmugjson", "config"],
       license="GPL",
-      data_files = [("/etc/zmugjson", ["logger.conf"])
+      data_files = [("/etc/zmugjson", ["logger.conf"]),
+                    ("/usr/share/doc/zmugjson-%s" % VERSION, ["LICENSE.TXT"])
       ]
      )
