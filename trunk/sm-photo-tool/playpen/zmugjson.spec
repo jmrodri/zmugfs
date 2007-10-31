@@ -12,7 +12,9 @@ Source0:        %{name}-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-root-%(%{__id_u} -n)
 BuildArch:      noarch
 BuildRequires:  python
+BuildRequires:  python-simplejson
 Requires:       python >= 2.3
+Requires:       python-simplejson
 
 %description
 FUSE-based filesystem to access Smugmug
