@@ -13,6 +13,8 @@ BuildRoot:      %{_tmppath}/%{name}-root-%(%{__id_u} -n)
 BuildArch:      noarch
 BuildRequires:  python
 Requires:       python >= 2.3
+Requires:       zmugjson
+Requires:       fuse-python
 
 %description
 FUSE-based filesystem to access Smugmug
@@ -42,6 +44,7 @@ rm -rf %{buildroot}
 %{python_sitelib}/zmugfs.*py*
 #%attr(755, root, root) %{_usr}/bin/%{name}
 %{_usr}/share/doc/%{name}-%{version}/LICENSE.TXT
+%attr(644, root, root) /etc/zmugfs/logger.conf
 #%{_usr}/share/doc/%{name}-%{version}/smugmugrc
 
 %changelog
