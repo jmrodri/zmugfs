@@ -6,9 +6,14 @@ import simplejson
 from config import Config
 import logging
 import logging.config
+import os
 
 # configure the logging system for the module
-logging.config.fileConfig("logger.conf")
+if os.path.exists('/etc/zmugjson/logger.conf'):
+    logging.config.fileConfig("/etc/zmugjson/logger.conf")
+else:
+    logging.config.fileConfig("logger.conf")
+
 log = logging.getLogger("zmugjson")
 
 def filename_get_data(name):
