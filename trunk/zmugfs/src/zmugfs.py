@@ -13,7 +13,11 @@ fuse.fuse_python_api = (0, 2)
 apikey = "xbBmfRgR1whEAOv9QRh687GGP6Ow0IM6"
 
 # configure the logging system for the module
-logging.config.fileConfig("logger.conf")
+if os.path.exists('/etc/zmugjson/logger.conf'):
+    logging.config.fileConfig("/etc/zmugjson/logger.conf")
+else:
+    logging.config.fileConfig("logger.conf")
+
 log = logging.getLogger("zmugfs")
 
 def _convert_date(datestr):
