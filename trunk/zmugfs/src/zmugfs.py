@@ -13,8 +13,8 @@ fuse.fuse_python_api = (0, 2)
 apikey = "xbBmfRgR1whEAOv9QRh687GGP6Ow0IM6"
 
 # configure the logging system for the module
-if os.path.exists('/etc/zmugjson/logger.conf'):
-    logging.config.fileConfig("/etc/zmugjson/logger.conf")
+if os.path.exists('/etc/zmugfs/logger.conf'):
+    logging.config.fileConfig("/etc/zmugfs/logger.conf")
 else:
     logging.config.fileConfig("logger.conf")
 
@@ -148,6 +148,7 @@ class ZmugFS(Fuse):
                 return self._nodes_by_path[p]
 
     def _indexTree(self):
+        log.info("Retrieving smugmug categories, this may take several minutes...")
         sm = zmugjson.Smugmug(apikey)
         sessionid = sm.loginWithPassword(self._config['smugmug.username'],
                                          self._config['smugmug.password'])
@@ -210,6 +211,7 @@ class ZmugFS(Fuse):
         for k in self._nodes_by_path.keys():
             log.debug(k)
         log.debug("end nodes by path -----------------------------------")
+        log.info("Finished retrieving categories")
 
     def _create_node(self, item, path):
         node = None
@@ -347,7 +349,7 @@ class ZmugFS(Fuse):
         #if self._imgdata_by_path.has_key(path) and self._imgdata_by_path[path]:
         #    del self._imgdata_by_path[path]
 
-def main():
+def main(args):
     usage = """
 zmugfs: smugmug filesystem
     """ + Fuse.fusage
@@ -359,4 +361,8 @@ zmugfs: smugmug filesystem
     server.main()
 
 if __name__ == '__main__':
-    main()
+    try:
+        main(sys.argv[1:])
+    except KeyboardInterrupt, e:
+        print >> sys.stderr, "\n\nExiting on user cancel."
+        sys.exit(1)
