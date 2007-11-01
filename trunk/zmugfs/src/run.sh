@@ -1,3 +1,3 @@
-export PYTHONPATH=../../sm-photo-tool/playpen/:$PYTHONPATH
+export PYTHONPATH=../../zmugjson/:$PYTHONPATH
 mkdir -p $1
 python ./zmugfs.py -d $1
