@@ -8,3 +8,4 @@ include AUTHORS
 include README
 include LICENSE.TXT
 include logger.conf
+include zmugfs

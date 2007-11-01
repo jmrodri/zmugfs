@@ -28,13 +28,6 @@ FUSE-based filesystem to access Smugmug
 %install
 rm -rf %{buildroot}
 %{__python} setup.py install --root=%{buildroot}
-#install -d -m 755 %{buildroot}%{_usr}/share/%{name}/
-#install -d -m 755 %{buildroot}%{_usr}/share/doc/%{name}-%{version}/
-#install -d -m 755 %{buildroot}%{_usr}/bin/
-#install -d -m 755 %{buildroot}%{_sysconfdir}/%{name}/
-#install -m 644 LICENSE.TXT %{buildroot}%{_usr}/share/doc/%{name}-%{version}/
-#install -m 644 smugmugrc %{buildroot}%{_usr}/share/doc/%{name}-%{version}/
-#install -m 755 sm-photo-tool.py %{buildroot}%{_usr}/bin/%{name}
 
 %clean
 rm -rf %{buildroot}
@@ -42,11 +35,13 @@ rm -rf %{buildroot}
 %files
 %defattr(-,root,root)
 %{python_sitelib}/zmugfs.*py*
-#%attr(755, root, root) %{_usr}/bin/%{name}
 %{_usr}/share/doc/%{name}-%{version}/LICENSE.TXT
+%attr(755, root, root) %{_bindir}/zmugfs
 %attr(644, root, root) /etc/zmugfs/logger.conf
-#%{_usr}/share/doc/%{name}-%{version}/smugmugrc
 
 %changelog
+* Wed Oct 31 2007 Jesus Rodriguez <jmrodri at gmail dot com> 0.1-2
+- first official release
+
 * Tue Oct 30 2007 Jesus Rodriguez <jmrodri at gmail dot com> 0.1-1
-- initial rpm release
+- test rpm release
