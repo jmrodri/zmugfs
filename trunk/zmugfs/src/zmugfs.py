@@ -6,6 +6,7 @@ import zmugjson
 from config import Config
 import logging.config
 import httplib
+import sys
 
 fuse.fuse_python_api = (0, 2)
 
