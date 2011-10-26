@@ -1,1 +1,1 @@
-rsync -avz --exclude .svn  htdocs/ jmrodri@shell.sourceforge.net:/home/groups/z/zm/zmugtools/htdocs/
+rsync -avz --exclude .svn  htdocs/ jmrodri@fedorapeople.org:/home/fedora/jmrodri/public_html/zmugfs
