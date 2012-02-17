@@ -3,10 +3,12 @@ import zmugjson
 import sys
 from config import Config
 
+
 class TestTree(unittest.TestCase):
     def testTree(self):
         tree = zmugjson.Tree()
         self.assertEquals(0, len(tree.children()))
+
 
 class TestCategory(unittest.TestCase):
     def testCategory(self):
@@ -23,6 +25,7 @@ class TestCategory(unittest.TestCase):
 #        self.assertEquals("foo", album.name)
 #        self.assertEquals(None, album.children())
 
+
 class TestSmugmug(unittest.TestCase):
 
     def setUp(self):
@@ -35,7 +38,6 @@ class TestSmugmug(unittest.TestCase):
         except zmugjson.Exception, e:
             self.assertEquals(1, e.code)
             self.assertEquals("invalid login", e.message)
-            
 
     def testLoginWithPassword(self):
         sessionid = self.sm.loginWithPassword(

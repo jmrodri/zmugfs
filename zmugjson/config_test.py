@@ -2,6 +2,7 @@ import unittest
 import os
 from config import Config
 
+
 class TestConfig(unittest.TestCase):
 
     def _writeouttestconf(self):

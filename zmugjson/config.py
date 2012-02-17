@@ -1,7 +1,11 @@
-import os, stat, errno, time
+import os
+import stat
+import errno
+import time
+
 
 class Config:
-    def __init__(self, global_conf, local_conf): 
+    def __init__(self, global_conf, local_conf):
         self._config = {}
 
         # read global config

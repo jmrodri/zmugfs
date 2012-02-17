@@ -13,7 +13,7 @@ setup(name="zmugjson",
       url="http://zmugtools.sourceforge.net",
       py_modules=["zmugjson", "config"],
       license="GPL",
-      data_files = [("/etc/zmugjson", ["logger.conf"]),
-                    ("/usr/share/doc/zmugjson-%s" % VERSION, ["LICENSE.TXT"])
+      data_files=[("/etc/zmugjson", ["logger.conf"]),
+                  ("/usr/share/doc/zmugjson-%s" % VERSION, ["LICENSE.TXT"])
       ]
      )
