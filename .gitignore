@@ -1,0 +1,10 @@
+*.swp
+*.swo
+*.bak
+*.pyc
+*.pyo
+*.src.rpm
+*.git.*.rpm
+*~
+.project
+.pydevproject
