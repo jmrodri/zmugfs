@@ -13,8 +13,8 @@ setup(name="zmugfs",
       url="http://zmugtools.sourceforge.net",
       py_modules=["zmugfs"],
       license="GPL",
-      scripts= [ "zmugfs" ],
-      data_files = [("/usr/share/doc/zmugfs-%s" % VERSION, ["LICENSE.TXT"]),
+      scripts=["zmugfs"],
+      data_files=[("/usr/share/doc/zmugfs-%s" % VERSION, ["LICENSE.TXT"]),
                     ("/etc/zmugfs", ["logger.conf"])
       ]
      )

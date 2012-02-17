@@ -1,11 +1,13 @@
 from config import Config
 
+
 def get_input(msg, default):
     val = raw_input(msg % default)
     if val is None or val == "":
         val = default
 
     return val
+
 
 def main():
     config = Config('/etc/zmugfs/zmugfs.conf', '.zmugfs/zmugfsrc')

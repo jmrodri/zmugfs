@@ -1,7 +1,10 @@
 #!/usr/bin/python
 import fuse
 from fuse import Fuse
-import os, stat, errno, time
+import errno
+import os
+import stat
+import time
 import zmugjson
 from config import Config
 import logging.config
@@ -21,9 +24,11 @@ else:
 
 log = logging.getLogger("zmugfs")
 
+
 def _convert_date(datestr):
     # smugmug returns date in the following format: "%Y-%m-%d %H:%M:%S"
     return int(time.mktime(time.strptime(datestr, "%Y-%m-%d %H:%M:%S")))
+
 
 class MyStat(fuse.Stat):
     def __init__(self):
@@ -38,6 +43,7 @@ class MyStat(fuse.Stat):
         self.st_atime = 0
         self.st_mtime = 0
         self.st_ctime = 0
+
 
 class Node(object):
     def __init__(self, path, id, inode=MyStat(), children=None):
@@ -54,6 +60,7 @@ class Node(object):
 
     def add_node(self, node):
         self.children.append(node)
+
 
 class ZmugFS(Fuse):
     """
@@ -110,7 +117,7 @@ class ZmugFS(Fuse):
         st.st_mode = stat.S_IFDIR | 0755
         st.st_ino = cat.id
         st.st_nlink = 0
-        st.st_atime = int(time.time()) # no time from smugmug available
+        st.st_atime = int(time.time())  # no time from smugmug available
         st.st_mtime = int(time.time())
         st.st_ctime = int(time.time())
         st.st_size = len(cat.categories) + len(cat.albums)
@@ -118,7 +125,6 @@ class ZmugFS(Fuse):
 
     def _inode_from_subcat(self, subcat):
         return self._inode_from_category(subcat)
-
 
     def _inode_from_album(self, album):
         st = MyStat()
@@ -145,7 +151,7 @@ class ZmugFS(Fuse):
     def find_best_node(self, path):
         paths = self._split_path(path)
         for p in paths:
-            if self._nodes_by_path.has_key(p):
+            if p in self._nodes_by_path:
                 return self._nodes_by_path[p]
 
     def _indexTree(self):
@@ -185,10 +191,11 @@ class ZmugFS(Fuse):
                     images = sm.getImages(sessionid, album['id'])
                     for image in images:
                         ipath = apath + '/' + image['FileName']
-                        imgnode = self._create_node(image, '/' + image['FileName'])
+                        imgnode = self._create_node(
+                            image, '/' + image['FileName'])
                         self._nodes_by_path[ipath] = imgnode
                         self._nodes_by_path[apath].children.append(imgnode)
-                        
+
             for album in cat.albums:
                 apath = catpath + '/' + album['Title']
                 log.debug("album path: [" + apath + "]")
@@ -204,7 +211,7 @@ class ZmugFS(Fuse):
                     imgnode = self._create_node(image, '/' + image['FileName'])
                     self._nodes_by_path[ipath] = imgnode
                     self._nodes_by_path[apath].children.append(imgnode)
-            
+
         sm.logout(sessionid)
 
         # DEBUG CODE
@@ -231,7 +238,7 @@ class ZmugFS(Fuse):
         we need an inode cache for the files we have.
         """
         log.debug("getattr [" + str(path) + "]")
-        if self._nodes_by_path.has_key(path):
+        if path in self._nodes_by_path:
             log.debug("returning inode for (%s)" % str(path))
             return self._nodes_by_path[path].inode
         else:
@@ -242,13 +249,14 @@ class ZmugFS(Fuse):
     #    print "opendir (%s)" % str(path)
 
     #def releasedir(self, path):
-    #    # a process has closed the directory, and is no longer reading from it.
+    #    # a process has closed the directory, and is no
+    #    # longer reading from it.
     #    print "releasedir (%s)" % str(path)
 
     #def fsyncdir(self, path, sync):
     #    # flush a directory to permanent storage
     #    pass
-    
+
     def readdir(self, path, offset):
         # read the next directory entry
         log.debug("readdir (%s) (%d)" % (str(path), int(offset)))
@@ -273,9 +281,8 @@ class ZmugFS(Fuse):
         # if found in memory, simply return data
         # if found on disk, read data, put in memory cache, then return.
 
-
         # see if we already got it
-        if not self._imgdata_by_path.has_key(path):
+        if not path in self._imgdata_by_path:
             imgdata = None
             cachedir = None
 
@@ -300,12 +307,12 @@ class ZmugFS(Fuse):
                 sm = zmugjson.Smugmug(apikey)
                 sessionid = sm.loginWithPassword(self._config['smugmug.username'],
                                                  self._config['smugmug.password'])
-                urls = sm.getImageUrls(sessionid, node.id);
+                urls = sm.getImageUrls(sessionid, node.id)
                 sm.logout(sessionid)
 
                 parts = urls['OriginalURL'].split('/')
                 conn = httplib.HTTPConnection(parts[2])
-                conn.request("GET",  '/' + '/'.join(parts[3:]))
+                conn.request("GET", '/' + '/'.join(parts[3:]))
                 resp = conn.getresponse()
                 imgdata = resp.read()
                 conn.close()
@@ -328,7 +335,7 @@ class ZmugFS(Fuse):
                 # TODO: use an LRU instead
                 oldest = self._findoldestpath()
                 del self._imgdata_by_path[oldest[0]]
-            self._imgdata_by_path[path] = {'imgdata':imgdata,'time':time.time()}
+            self._imgdata_by_path[path] = {'imgdata': imgdata, 'time': time.time()}
 
     def read(self, path, size, offset):
         log.debug("read (%s): %d:%d)" % (str(path), int(size), int(offset)))
@@ -338,7 +345,7 @@ class ZmugFS(Fuse):
         if offset < imglen:
             if offset + size > imglen:
                 size = imglen - offset
-            buf = imgdata[offset:offset+size]
+            buf = imgdata[offset:offset + size]
         else:
             buf = ''
         return buf
@@ -349,6 +356,7 @@ class ZmugFS(Fuse):
         # to cache images in the future.
         #if self._imgdata_by_path.has_key(path) and self._imgdata_by_path[path]:
         #    del self._imgdata_by_path[path]
+
 
 def main(args):
     usage = """
